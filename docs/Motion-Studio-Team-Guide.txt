@@ -1,7 +1,7 @@
-Motion Studio 1.2.0 | Windows 11 x64
+Motion Studio 1.2.1 | Windows 11 x64
 
 INSTALL
-Run Motion-Studio-Setup-1.2.0.exe. This installs for your Windows user and
+Run Motion-Studio-Setup-1.2.1.exe. This installs for your Windows user and
 includes the CPU and Vulkan runtimes. No build tools, Python, Go or Vulkan
 SDK are needed on team computers. A current graphics driver is recommended.
 The installer is unsigned; Windows may show an unknown-publisher warning.
@@ -37,7 +37,8 @@ Open Model & generation settings to choose an installed model, encoder, steps
 and seed. Write a prompt, choose 60-150 frames per segment and Generate motion.
 Add prompt segments for a sequence. Select the result under Saved motions.
 Drag the preview to rotate, scroll to zoom, Shift-drag to pan, double-click to
-reset. Character preview uses the included 65-bone Mixamo mannequin.
+reset. Choose your imported character in Mixamo character. The included
+65-bone mannequin is a separate fallback mesh.
 Press Export character GLB to export the skinned mesh, Mixamo armature and
 retargeted animation together. Native skeleton GLB exports the original joints.
 
@@ -45,7 +46,9 @@ CUSTOM CHARACTERS AND BLENDER
 Press Import character and choose a Mixamo FBX with embedded textures or a
 self-contained GLB, under 100 MB. Its humanoid Mixamo names, hierarchy and
 skin weights are checked. Imported characters are saved locally and can be
-selected again after restarting. Reference pose shows the original bind pose;
+selected again after restarting. The selected character is remembered on
+this computer across browser windows. On upgrade, the latest imported character
+is used when no selection has been saved. Reference pose shows the original bind pose;
 Back to motion returns to animation. Use a neutral Mixamo T-pose character.
 The saved GLB must be under 64 MB. Textures are limited to 1024 pixels on export.
 

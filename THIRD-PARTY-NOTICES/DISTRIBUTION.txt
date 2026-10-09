@@ -1,4 +1,4 @@
-Motion Studio 1.2.0
+Motion Studio 1.2.1
 Distributed by ZURAVFX.
 
 This application is a modified distribution of kimodo.cpp and GGML.
