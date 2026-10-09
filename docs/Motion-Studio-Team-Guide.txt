@@ -1,0 +1,75 @@
+Motion Studio 1.1.0 | Windows 11 x64
+
+INSTALL
+Run Motion-Studio-Setup-1.1.0.exe. This installs for your Windows user and
+includes the CPU and Vulkan runtimes. No build tools, Python, Go or Vulkan
+SDK are needed on team computers. A current graphics driver is recommended.
+The installer is unsigned; Windows may show an unknown-publisher warning.
+
+FIRST RUN AND MODEL LIBRARY
+Open Motion Studio from the desktop or Start menu. Choose at least one motion
+model and one text encoder. The library shows each option's size and the total
+still to download before you press Download. Shared files are counted once,
+installed files are reused, and interrupted downloads resume when selected again.
+The recommended SOMA RP + Q8_0 first download is 9.28 GB (8.65 GiB).
+Allow at least 12 GB free space for that pair and more for additional models.
+
+Downloadable motion models:
+  SOMA RP v1.1 / SOMA SEED v1.1: 30-joint human skeletons, 1.13 GB each.
+  G1 RP v1 / G1 SEED v1: 34-joint robot skeletons, 1.13 GB each.
+
+Text encoders (including the shared tokenizer):
+  Q8_0: 8.15 GB, recommended.
+  Q6_K: 6.33 GB. Q5_K: 5.34 GB. Q4_K: 4.40 GB. Q4_K_M: 5.07 GB.
+  BF16 reference: 15.18 GB, highest precision and largest memory requirement.
+Smaller quantisations can produce different results; Q4_K has substantial
+measured divergence from the BF16 reference in upstream comparisons.
+Any installed encoder can be used with any installed motion model.
+
+SMPL-X RP v1 is supported through the library's local research import.
+You must separately obtain access to the NVIDIA checkpoint and convert it
+with upstream kimodo.cpp tooling. Import the converted GGUF and confirm the
+research licence. No SMPL-X weights are included or automatically downloaded.
+The engine validates the checkpoint when used. Its use is non-commercial research.
+
+CREATE AND EXPORT
+Open Model & generation settings to choose an installed model, encoder, steps
+and seed. Write a prompt, choose 60-150 frames per segment and Generate motion.
+Add prompt segments for a sequence. Select the result under Saved motions.
+Drag the preview to rotate, scroll to zoom, Shift-drag to pan, double-click to
+reset. Press Download animated GLB to export the selected skeleton animation.
+
+KEEP THE WORKSPACE TIDY
+Use the x on a saved motion to hide it from the list, or Hide all to hide the
+finished motions together. Restore hidden motions brings them back. Clear preview
+empties the viewport while keeping your prompt and settings. Hidden/cleared state
+is remembered in this browser. These controls never delete the saved motion files.
+
+Exports contain animated joint nodes, without a character mesh. They need
+retargeting/rigging in Blender, Unreal or your other animation software.
+Fine finger motion and the expanded 77-joint SOMA presentation are not included.
+
+GPU AND CPU
+The launcher uses Vulkan when its loader is available. If generation fails on
+your GPU, quit Motion Studio from its tray icon and use the CPU mode shortcut.
+Windows 11 x64 with AVX2 is required. ARM Windows is not supported in this build.
+Generation can use substantial RAM; 16 GB or more is recommended for Q8_0,
+and BF16 needs more. Performance varies with hardware and settings.
+
+DATA AND PRIVACY
+Generation runs locally. Downloads contact Hugging Face; licence links contact
+their respective websites. After models are installed, generation works offline.
+Use the tray menu to open saved motions or the model folder. For upgrade
+compatibility the data folder remains %LOCALAPPDATA%\OA\MotionStudio\Data.
+Updates and uninstalling the program preserve this folder.
+Closing the browser leaves the background app running; quit from the tray icon.
+
+LICENCES
+Built with Meta Llama 3. The kimodo.cpp engine, GGML, fonts, models and runtime
+components have separate upstream licences. Read About & licences in the app
+and the installation's Licences folder. SOMA/G1 use NVIDIA Open Model terms;
+SMPL-X has separate research restrictions. This distribution does not include
+model weights. See the respective licences for permitted uses and obligations.
+
+Support and binary releases: https://github.com/ZURAVFX/Motion-Studio
+Upstream engine: https://github.com/localai-org/kimodo.cpp

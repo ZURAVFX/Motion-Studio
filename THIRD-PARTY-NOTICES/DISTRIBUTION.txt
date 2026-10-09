@@ -1,0 +1,25 @@
+Motion Studio 1.1.0
+Distributed by ZURAVFX.
+
+This application is a modified distribution of kimodo.cpp and GGML.
+The interface, Windows launcher, model library and packaging are modifications.
+Upstream copyrights and licence terms remain in effect.
+
+kimodo.cpp: Apache License 2.0 (kimodo-Apache-2.0.txt and kimodo-NOTICE.txt).
+GGML: MIT licence (ggml-LICENSE.txt).
+DM Sans: SIL Open Font License 1.1 (DM-Sans-OFL.txt).
+Microsoft Visual C++ runtime: Microsoft redistribution terms.
+Model weights: separate NVIDIA and Meta licences, provided with this app.
+
+Built with Meta Llama 3.
+Meta Llama 3 is licensed under the Meta Llama 3 Community License,
+Copyright (c) Meta Platforms, Inc. All Rights Reserved.
+Licensed by NVIDIA Corporation under the NVIDIA Open Model License.
+
+Model downloads are optional and are retrieved directly from Hugging Face.
+Downloading or using a model means you accept its respective upstream terms.
+SMPL-X requires separately licensed non-commercial research checkpoint access.
+No model weights are included in this installer.
+
+No warranty or guaranteed suitability for any particular animation workflow.
+See the complete upstream licences for applicable terms and conditions.

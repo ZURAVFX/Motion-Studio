@@ -1,0 +1,9 @@
+kimodo.cpp
+
+This project uses ggml, Copyright the ggml authors:
+https://github.com/ggml-org/ggml
+
+The demo displays the LocalAI logo from the LocalAI project:
+https://github.com/mudler/LocalAI
+
+Motion Studio changes: the original demo branding was removed. The interface, Windows launcher, model library, local request protection, process ownership and installer are modifications. The original LocalAI logo is not shipped in this distribution. Original upstream copyrights and licences are retained.
