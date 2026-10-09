@@ -4,9 +4,9 @@ Describe a movement, generate it locally and export an animated GLB.
 Motion Studio runs NVIDIA Kimodo through kimodo.cpp on Windows 11 x64,
 using your CPU or a Vulkan graphics card.
 
-**[Download Motion Studio 1.1.0 for Windows](https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.1.0/Motion-Studio-Setup-1.1.0.exe)**
+**[Download Motion Studio 1.2.0 for Windows](https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.2.0/Motion-Studio-Setup-1.2.0.exe)**
 
-Installer: 14.6 MB. Model weights download separately; sizes are shown before
+Installer: 14.9 MB. Model weights download separately; sizes are shown before
 you start. The installer includes the runtimes, so you do not need build tools,
 Python, Go or the Vulkan SDK. The installer is unsigned.
 
@@ -52,16 +52,29 @@ included. The engine validates the imported checkpoint when used.
 1. Run the installer and open Motion Studio.
 2. Choose a motion model and text encoder in the model library, then download.
 3. Describe a movement, choose frames/settings and select Generate motion.
-4. Select the saved result to preview it and Download animated GLB.
+4. Select a saved motion to preview it on the mannequin or your Mixamo character.
+5. Export character GLB to download the bound mesh, armature and animation.
 
 Use the **×** on a motion to hide it, **Hide all** to tidy the list, or
 **Clear preview** to empty the viewport. **Restore hidden motions** brings
 the list back. These controls keep the saved files, and clearing preserves
 your prompt and settings. Visibility preferences survive browser reloads.
 
-The exported GLB contains animated skeleton nodes without a character mesh.
-Retargeting/rigging is done in your animation software. Fine finger animation
-and the expanded SOMA presentation skeleton are not included.
+Import a custom **Mixamo FBX or GLB** character with its existing skin weights.
+FBX textures must be embedded; GLBs must be self-contained. Files may be up to
+100 MB; the converted character must fit within 64 MB. Characters stay on your
+computer and can be selected again after restarting. Textures export at up to
+1024 pixels. The built-in mannequin has the full **65-bone Mixamo hierarchy**.
+
+**Export character GLB** includes the skinned mesh, Mixamo armature and baked
+animation at 30 fps. The reference rig's names, hierarchy and end joints are
+preserved. In Blender, set 30 fps before importing and choose Blender bone
+direction for readable armature display. Custom characters retain their own
+rig proportions. SOMA is preferred for human motion; G1 motion is adapted from
+a robot rig. Finger bones keep their reference pose.
+
+**Native skeleton GLB** remains available for the original model joints.
+Fine finger movement and the expanded SOMA presentation skeleton are not predicted.
 
 The launcher chooses Vulkan when available. If your GPU fails, quit from the
 tray icon and use the CPU mode shortcut. Windows 11 x64 with AVX2 is required;
@@ -80,7 +93,7 @@ repository archives contain only this distribution documentation.
 
 Motion Studio is a modified distribution of the
 [Apache-2.0 kimodo.cpp engine](https://github.com/localai-org/kimodo.cpp),
-[GGML](https://github.com/ggml-org/ggml) and NVIDIA Kimodo.
+[GGML](https://github.com/ggml-org/ggml), [Three.js](https://threejs.org/) and NVIDIA Kimodo.
 **Built with Meta Llama 3.**
 
 SOMA/G1 models have [NVIDIA Open Model terms](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/).

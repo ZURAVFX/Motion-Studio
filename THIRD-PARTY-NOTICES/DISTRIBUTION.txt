@@ -1,12 +1,13 @@
-Motion Studio 1.1.0
+Motion Studio 1.2.0
 Distributed by ZURAVFX.
 
 This application is a modified distribution of kimodo.cpp and GGML.
-The interface, Windows launcher, model library and packaging are modifications.
+The interface, Windows launcher, model library, character retargeting and packaging are modifications.
 Upstream copyrights and licence terms remain in effect.
 
 kimodo.cpp: Apache License 2.0 (kimodo-Apache-2.0.txt and kimodo-NOTICE.txt).
 GGML: MIT licence (ggml-LICENSE.txt).
+Three.js: MIT licence (three-LICENSE.txt).
 DM Sans: SIL Open Font License 1.1 (DM-Sans-OFL.txt).
 Microsoft Visual C++ runtime: Microsoft redistribution terms.
 Model weights: separate NVIDIA and Meta licences, provided with this app.

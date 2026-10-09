@@ -1,7 +1,7 @@
-Motion Studio 1.1.0 | Windows 11 x64
+Motion Studio 1.2.0 | Windows 11 x64
 
 INSTALL
-Run Motion-Studio-Setup-1.1.0.exe. This installs for your Windows user and
+Run Motion-Studio-Setup-1.2.0.exe. This installs for your Windows user and
 includes the CPU and Vulkan runtimes. No build tools, Python, Go or Vulkan
 SDK are needed on team computers. A current graphics driver is recommended.
 The installer is unsigned; Windows may show an unknown-publisher warning.
@@ -37,7 +37,24 @@ Open Model & generation settings to choose an installed model, encoder, steps
 and seed. Write a prompt, choose 60-150 frames per segment and Generate motion.
 Add prompt segments for a sequence. Select the result under Saved motions.
 Drag the preview to rotate, scroll to zoom, Shift-drag to pan, double-click to
-reset. Press Download animated GLB to export the selected skeleton animation.
+reset. Character preview uses the included 65-bone Mixamo mannequin.
+Press Export character GLB to export the skinned mesh, Mixamo armature and
+retargeted animation together. Native skeleton GLB exports the original joints.
+
+CUSTOM CHARACTERS AND BLENDER
+Press Import character and choose a Mixamo FBX with embedded textures or a
+self-contained GLB, under 100 MB. Its humanoid Mixamo names, hierarchy and
+skin weights are checked. Imported characters are saved locally and can be
+selected again after restarting. Reference pose shows the original bind pose;
+Back to motion returns to animation. Use a neutral Mixamo T-pose character.
+The saved GLB must be under 64 MB. Textures are limited to 1024 pixels on export.
+
+For Blender, set the scene to 30 fps, then File > Import > glTF 2.0 (.glb/.gltf).
+Choose the Blender bone direction option for readable armature display.
+The reference Mixamo rig exports all 65 bones, including finger and toe end
+joints. Custom characters retain their own names, proportions and skin weights.
+Only the motion is retargeted. SOMA is the preferred human model; G1 robot
+motion is adapted to the human rig. Finger joints keep their reference pose.
 
 KEEP THE WORKSPACE TIDY
 Use the x on a saved motion to hide it from the list, or Hide all to hide the
@@ -45,9 +62,9 @@ finished motions together. Restore hidden motions brings them back. Clear previe
 empties the viewport while keeping your prompt and settings. Hidden/cleared state
 is remembered in this browser. These controls never delete the saved motion files.
 
-Exports contain animated joint nodes, without a character mesh. They need
-retargeting/rigging in Blender, Unreal or your other animation software.
-Fine finger motion and the expanded 77-joint SOMA presentation are not included.
+Character GLBs include a bound mesh and armature; native GLBs contain the
+original skeleton only. Fine finger motion and the expanded 77-joint SOMA
+presentation are not predicted by these motion checkpoints.
 
 GPU AND CPU
 The launcher uses Vulkan when its loader is available. If generation fails on
@@ -66,7 +83,7 @@ Closing the browser leaves the background app running; quit from the tray icon.
 
 LICENCES
 Built with Meta Llama 3. The kimodo.cpp engine, GGML, fonts, models and runtime
-components have separate upstream licences. Read About & licences in the app
+components and Three.js have separate upstream licences. Read About & licences in the app
 and the installation's Licences folder. SOMA/G1 use NVIDIA Open Model terms;
 SMPL-X has separate research restrictions. This distribution does not include
 model weights. See the respective licences for permitted uses and obligations.
