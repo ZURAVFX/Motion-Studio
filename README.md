@@ -1,108 +1,35 @@
 # Motion Studio
 
-Describe a movement, generate it locally and export an animated GLB.
-Motion Studio runs NVIDIA Kimodo through kimodo.cpp on Windows 11 x64,
-using your CPU or a Vulkan graphics card.
+I've put Motion Studio together to make NVIDIA's Kimodo easier to install and use on Windows. Type the movement you're after, generate it on your own PC, then preview it on a Mixamo character and export it as a GLB.
 
-**[Download Motion Studio 1.2.1 for Windows](https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.2.1/Motion-Studio-Setup-1.2.1.exe)**
+Use it to try out a movement, block out a sequence or get a first pass to work from in Blender.
 
-Installer: 11.9 MB. Model weights download separately; sizes are shown before
-you start. The installer includes the runtimes, so you do not need build tools,
-Python, Go or the Vulkan SDK. The installer is unsigned.
+[Download Motion Studio 1.2.1 for Windows](https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.2.1/Motion-Studio-Setup-1.2.1.exe)
 
-![Motion Studio](docs/Motion-Studio-Preview.jpg)
+The installer is 11.9 MB and includes the CPU and Vulkan runtimes. You don't need to install Python, Go, C++ build tools or the Vulkan SDK. Model files download separately, and the app shows the size before you start.
 
-## Choose your models
+You can add prompt segments to build a sequence, adjust the frames, steps and seed, and keep different takes to come back to later. There are four SOMA/G1 motion models and six text encoders to choose from. Installed files are reused and interrupted downloads can resume.
 
-Download any of the four SOMA/G1 motion models and six text encoders.
-Each option shows its size. The download summary accounts for files already
-installed, partial downloads and shared files, so you can see the remaining
-total before starting. Interrupted downloads can resume.
+Import a Mixamo FBX or GLB character to preview the motion on your own mesh. The character export includes the mesh, its Mixamo rig and the animation together, at 30 fps. You can also export the original model skeleton on its own. Your chosen character is remembered across app windows and restarts.
 
-![Model library with visible download sizes](docs/Motion-Studio-Model-Library.jpg)
+![Motion Studio preview](docs/Motion-Studio-Preview.jpg)
 
-| Motion model | Skeleton | Download |
-|---|---|---:|
-| SOMA RP v1.1 | 30-joint human | 1.13 GB |
-| SOMA SEED v1.1 | 30-joint human | 1.13 GB |
-| G1 RP v1 | 34-joint robot | 1.13 GB |
-| G1 SEED v1 | 34-joint robot | 1.13 GB |
+The preview above uses the included fallback mannequin. Imported characters keep their own proportions, bone names and skin weights.
 
-| Text encoder | Download including shared tokenizer |
-|---|---:|
-| Q8_0 (recommended) | 8.15 GB |
-| Q6_K | 6.33 GB |
-| Q5_K | 5.34 GB |
-| Q4_K | 4.40 GB |
-| Q4_K_M | 5.07 GB |
-| BF16 reference | 15.18 GB |
+Use the small x beside a saved motion to hide it, or Clear preview to empty the viewport. Both keep the files on disk. Restore hidden motions brings them back.
 
-Any encoder works with any motion model. Smaller quantisations can change the
-results; Q4_K has substantial measured divergence from the BF16 reference in
-upstream comparisons. SOMA RP + Q8_0 is the recommended starting pair:
-**9.28 GB (8.65 GiB)** for a fresh setup. Allow at least 12 GB free space.
+To get started, run the installer and choose SOMA RP + Q8_0 in the model library. A fresh download of that pair is 9.28 GB (8.65 GiB), so allow at least 12 GB of free disk space. Then write a prompt and press Generate motion.
 
-SMPL-X RP v1 is supported through a **local GGUF import** for separately
-licensed non-commercial research. Obtain access to the checkpoint and convert
-it using upstream tools. Its weights are not automatically downloaded or
-included. The engine validates the imported checkpoint when used.
+Generation runs on your CPU or a compatible Vulkan graphics card. Once the models are downloaded, it works offline. Your prompts, characters and generated motions stay on your computer.
 
-## Use it
+Windows 11 x64 with AVX2 is required. ARM Windows isn't supported in this build. At least 16 GB RAM is recommended for Q8_0, and speed depends on your hardware and settings. The installer is unsigned, so Windows may show an unknown-publisher warning.
 
-1. Run the installer and open Motion Studio.
-2. Choose a motion model and text encoder in the model library, then download.
-3. Describe a movement, choose frames/settings and select Generate motion.
-4. Select a saved motion to preview it on the mannequin or your Mixamo character.
-5. Export character GLB to download the bound mesh, armature and animation.
+Treat the output as a starting point. Some movements will need cleaning up, and the model doesn't generate detailed finger animation. SOMA is the better fit for human characters; G1 motion is adapted from a robot rig.
 
-Use the **Ã—** on a motion to hide it, **Hide all** to tidy the list, or
-**Clear preview** to empty the viewport. **Restore hidden motions** brings
-the list back. These controls keep the saved files, and clearing preserves
-your prompt and settings. Visibility preferences survive browser reloads.
+Character FBXs need embedded textures and GLBs need to be self-contained. See the [user guide](docs/Motion-Studio-Team-Guide.txt) for import limits, Blender setup and the full list of model sizes. Separately licensed SMPL-X research models can be imported locally; they aren't included in the downloads.
 
-Import a custom **Mixamo FBX or GLB** character with its existing skin weights.
-FBX textures must be embedded; GLBs must be self-contained. Files may be up to
-100 MB; the converted character must fit within 64 MB. Characters stay on your
-computer and can be selected again after restarting. Textures export at up to
-1024 pixels. The built-in mannequin has the full **65-bone Mixamo hierarchy**.
+This public repository contains the Windows installer and documentation. Application source is maintained privately and isn't included here. GitHub's automatic source archives contain the documentation, not the application source.
 
-**Export character GLB** includes the skinned mesh, Mixamo armature and baked
-animation at 30 fps. The reference rig's names, hierarchy and end joints are
-preserved. In Blender, set 30 fps before importing and choose Blender bone
-direction for readable armature display. Custom characters retain their own
-rig proportions. SOMA is preferred for human motion; G1 motion is adapted from
-a robot rig. Finger bones keep their reference pose.
+Built around NVIDIA Kimodo and [kimodo.cpp](https://github.com/localai-org/kimodo.cpp), with [GGML](https://github.com/ggml-org/ggml) and [Three.js](https://threejs.org/). The installer, model library, character preview and export tools are additions to the upstream project. Built with Meta Llama 3.
 
-**Native skeleton GLB** remains available for the original model joints.
-Fine finger movement and the expanded SOMA presentation skeleton are not predicted.
-
-The launcher chooses Vulkan when available. If your GPU fails, quit from the
-tray icon and use the CPU mode shortcut. Windows 11 x64 with AVX2 is required;
-ARM Windows is not supported. 16 GB RAM or more is recommended for Q8_0,
-with more needed for BF16. Hardware and settings affect performance.
-
-Generation stays on your computer and works offline after model installation.
-Downloads contact Hugging Face. Updates preserve installed models and saved
-motions. See the [team/user guide](docs/Motion-Studio-Team-Guide.txt).
-
-## Distribution and credits
-
-This repository provides **binary downloads and documentation**. Application
-source is maintained privately and is not published here. GitHub's automatic
-repository archives contain only this distribution documentation.
-
-Motion Studio is a modified distribution of the
-[Apache-2.0 kimodo.cpp engine](https://github.com/localai-org/kimodo.cpp),
-[GGML](https://github.com/ggml-org/ggml), [Three.js](https://threejs.org/) and NVIDIA Kimodo.
-**Built with Meta Llama 3.**
-
-SOMA/G1 models have [NVIDIA Open Model terms](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/).
-The [text encoder has separate Meta Llama 3 terms](https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML).
-SMPL-X has separate research restrictions. Full third-party notices are in
-the installer and [THIRD-PARTY-NOTICES](THIRD-PARTY-NOTICES/).
-No model weights are bundled in the installer.
-
-In 1.2.1, your selected imported character is remembered on this computer
-across browser windows and restarts. The built-in mannequin is a separate
-fallback mesh. Upgrades prefer an existing imported character when no selection
-has been saved. Select a different character in **Mixamo character** at any time.
+The engine, models and other components have their own licences. Full [third-party notices](THIRD-PARTY-NOTICES/) are included with the installer, along with the separate NVIDIA and Meta terms. No model weights are bundled.
