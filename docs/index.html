@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Studio | ZURA VFX</title>
+<meta name="description" content="Generate movement from text on your own PC, preview it on a character and export a GLB.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Motion Studio | ZURA VFX">
+<meta property="og:description" content="Generate movement from text on your own PC, preview it on a character and export a GLB.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("reveal-ready");}</script>
+<style>
+:root{
+  --canvas:#ffffff; --ink:#111111; --muted:#686868;
+  --well:#e8e8e8; --well-deep:#dedede; --line:#d2d2d2; --blue:#5f6fff;
+  --page-pad:clamp(18px,3vw,48px); --max:1240px; --header:78px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;min-width:320px}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:"Inter Tight",Inter,Arial,sans-serif;font-size:16px;line-height:1.35;letter-spacing:0;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,video{max-width:100%;display:block}
+figure{margin:0}
+h1,h2,h3,p{margin:0}
+h1,h2,h3,strong{font-weight:600}
+::selection{background:var(--blue);color:#fff}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.shell{width:min(100%,var(--max));margin-inline:auto;padding-inline:var(--page-pad)}
+
+.skip-link{position:fixed;top:12px;left:12px;z-index:100;background:var(--ink);color:#fff;padding:10px 14px;transform:translateY(-160%);transition:transform .18s}
+.skip-link:focus{transform:translateY(0)}
+
+.site-header{position:sticky;top:0;z-index:50;background:#fffffff2;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.site-header__inner{display:flex;align-items:center;justify-content:space-between;gap:24px;height:var(--header);width:min(100%,var(--max));margin-inline:auto;padding-inline:var(--page-pad)}
+.wordmark{font-weight:700;font-size:clamp(1.05rem,1.6vw,1.35rem);white-space:nowrap}
+.wordmark span{color:var(--blue)}
+.site-nav{display:flex;align-items:center;gap:clamp(18px,2.6vw,40px);font-size:.86rem}
+.site-nav a{padding:6px 0;border-bottom:1px solid transparent;transition:color .16s,border-color .16s}
+.site-nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+.intro{padding:clamp(56px,7vw,110px) 0 clamp(40px,5vw,72px)}
+.kicker{color:var(--muted);text-transform:uppercase;font-size:.76rem}
+.intro h1{margin:18px 0 0;font-size:clamp(3rem,8vw,7.5rem);line-height:.84;max-width:16ch}
+.lede{margin-top:22px;max-width:60ch;color:#303030;font-size:clamp(1.02rem,1.5vw,1.3rem)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 18px;border:1px solid var(--line);background:var(--canvas);font:inherit;font-weight:600;transition:border-color .16s,background-color .16s,color .16s}
+.btn:hover{border-color:var(--blue);background:var(--well);color:var(--blue)}
+.btn--primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn--primary:hover{background:#000;border-color:#000;color:#fff}
+
+.media{margin-top:clamp(38px,5vw,64px)}
+.mask-frame{position:relative;border:1.25px solid var(--blue);background:var(--well-deep);aspect-ratio:16/9}
+.mask-frame img,.mask-frame video{width:100%;height:100%;object-fit:cover}
+.mask-point{position:absolute;z-index:2;width:7px;height:7px;border:1px solid var(--blue);background:var(--canvas);transform:translate(-50%,-50%)}
+.mask-point--tl{top:0;left:0}
+.mask-point--tr{top:0;left:100%}
+.mask-point--bl{top:100%;left:0}
+.mask-point--br{top:100%;left:100%}
+
+.band{border-top:1px solid var(--line);padding:clamp(46px,6vw,92px) 0}
+.band h2{font-size:clamp(1.9rem,3.6vw,3.4rem);line-height:1;max-width:24ch}
+.band .lede{margin-top:16px}
+
+.rows,.steps{list-style:none;margin:clamp(28px,3.6vw,48px) 0 0;padding:0;border-top:1px solid var(--line)}
+.rows li{display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,1.35fr);gap:clamp(14px,2vw,32px);align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line)}
+.rows .n{color:var(--muted);font-size:.8rem}
+.rows .t{font-weight:600;font-size:clamp(1.05rem,1.7vw,1.5rem)}
+.rows .d{color:#444;font-size:.95rem}
+
+.steps{counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:52px minmax(0,1fr);gap:clamp(14px,2vw,32px);padding:22px 0;border-bottom:1px solid var(--line)}
+.steps li::before{content:counter(s,decimal-leading-zero);color:var(--blue);font-weight:600;font-size:.9rem}
+.steps .t{font-weight:600;font-size:clamp(1.02rem,1.6vw,1.35rem)}
+.steps .d{color:#444;font-size:.95rem;margin-top:6px;max-width:62ch}
+
+.note{margin-top:clamp(30px,4vw,54px);border-left:2px solid var(--blue);padding:4px 0 4px 20px;max-width:70ch;color:#333}
+.note b{display:block;margin-bottom:6px}
+
+.site-footer{border-top:1px solid var(--line);margin-top:clamp(60px,8vw,120px)}
+.site-footer__inner{width:min(100%,var(--max));margin-inline:auto;padding:clamp(34px,4vw,52px) var(--page-pad);display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:flex-end}
+.site-footer__name{font-weight:600;color:var(--ink)}
+.site-footer p{color:var(--muted);font-size:.82rem;margin-top:5px}
+.site-footer nav{display:flex;flex-wrap:wrap;gap:24px;font-size:.85rem}
+.site-footer nav a:hover{color:var(--blue)}
+
+.reveal-ready [data-reveal]{transform:translateY(14px);transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.reveal-ready [data-reveal].is-visible{transform:none}
+
+@media (max-width:820px){
+  :root{--header:62px}
+  .site-nav{gap:16px;font-size:.8rem}
+  .rows li{grid-template-columns:34px minmax(0,1fr);gap:8px 16px}
+  .rows .d{grid-column:2}
+  .steps li{grid-template-columns:34px minmax(0,1fr);gap:8px 16px}
+}
+@media (max-width:470px){
+  .site-nav a:not(:last-child){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal-ready [data-reveal]{transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="wordmark" href="https://zuravfx.com" aria-label="ZURA VFX, home">ZURA <span>VFX</span></a>
+    <nav class="site-nav" aria-label="Page navigation">
+      <a href="https://github.com/ZURAVFX/Motion-Studio">GitHub</a>
+      <a href="#install">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="shell">
+
+    <section class="intro">
+      <p class="kicker">Windows 11 / Local generation / Text to motion</p>
+      <h1>Type a movement, generate it on your PC.</h1>
+      <p class="lede">Motion Studio makes NVIDIA's Kimodo easier to install and use on Windows. Write the movement you are after, generate it locally, preview it on a Mixamo character and export a GLB for Blender.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.2.1/Motion-Studio-Setup-1.2.1.exe">Download for Windows</a>
+        <a class="btn" href="https://github.com/ZURAVFX/Motion-Studio">View on GitHub</a>
+      </div>
+      <figure class="media mask-frame" data-reveal>
+        <img src="Motion-Studio-Preview.jpg" alt="Motion Studio generating a movement and previewing it on the included mannequin.">
+        <span class="mask-point mask-point--tl"></span>
+        <span class="mask-point mask-point--tr"></span>
+        <span class="mask-point mask-point--bl"></span>
+        <span class="mask-point mask-point--br"></span>
+      </figure>
+    </section>
+
+    <section class="band">
+      <h2>Built to be installed and used.</h2>
+      <p class="lede">The installer is 11.9 MB and includes the CPU and Vulkan runtimes, so you do not need Python, Go, C++ build tools or the Vulkan SDK.</p>
+      <ul class="rows" data-reveal>
+        <li><span class="n">01</span><span class="t">Local generation</span><span class="d">Runs on your CPU or a compatible Vulkan graphics card, and works offline once the models are downloaded.</span></li>
+        <li><span class="n">02</span><span class="t">Sequences and takes</span><span class="d">Add prompt segments to build a sequence, adjust frames, steps and seed, and keep different takes to return to.</span></li>
+        <li><span class="n">03</span><span class="t">Character preview and export</span><span class="d">Import a Mixamo FBX or GLB to preview the motion, then export the mesh, rig and animation together at 30 fps.</span></li>
+      </ul>
+    </section>
+
+    <section class="band">
+      <h2>From prompt to GLB.</h2>
+      <p class="lede">Model files download separately, and the app shows the size before you start.</p>
+      <ol class="steps" data-reveal>
+        <li><div><span class="t">Install and pick a model</span><p class="d">Choose SOMA RP + Q8_0 to get started. A fresh download of that pair is 9.28 GB.</p></div></li>
+        <li><div><span class="t">Write a prompt and generate</span><p class="d">Generation runs locally. Prompts, characters and motions stay on your computer.</p></div></li>
+        <li><div><span class="t">Preview and export</span><p class="d">Bring in your own character, preview the motion, then export a GLB for Blender.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="band" id="install">
+      <h2>Windows install.</h2>
+      <p class="lede">Windows 11 x64 with AVX2 is required, and ARM Windows is not supported in this build.</p>
+      <ol class="steps" data-reveal>
+        <li><div><span class="t">Run the installer</span><p class="d">Motion-Studio-Setup-1.2.1.exe. The installer is unsigned, so Windows may show an unknown-publisher warning.</p></div></li>
+        <li><div><span class="t">Download a model pair</span><p class="d">Allow at least 12 GB of free disk space for a fresh SOMA RP + Q8_0 download.</p></div></li>
+        <li><div><span class="t">Generate your first motion</span><p class="d">Write a prompt and press Generate motion.</p></div></li>
+      </ol>
+      <div class="actions">
+        <a class="btn btn--primary" href="https://github.com/ZURAVFX/Motion-Studio/releases/download/v1.2.1/Motion-Studio-Setup-1.2.1.exe">Download for Windows</a>
+        <a class="btn" href="https://github.com/ZURAVFX/Motion-Studio/issues">Compatibility / bugs</a>
+      </div>
+      <div class="note">
+        <b>Treat the output as a starting point</b>
+        Some movements will need cleaning up, and the model does not generate detailed finger animation. SOMA suits human characters, and G1 motion is adapted from a robot rig. At least 16 GB of RAM is recommended for Q8_0.
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div>
+      <p class="site-footer__name">Elliot McKenzie / Zura</p>
+      <p>Motion designer, VFX artist &amp; production technologist</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="https://zuravfx.com/work/">Work</a>
+      <a href="https://zuravfx.com/about/">About</a>
+      <a href="https://zuravfx.com/products/">Tools + Downloads</a>
+      <a href="https://zuravfx.com/contact/">Contact me</a>
+    </nav>
+    <p>© 2026</p>
+  </div>
+</footer>
+
+<script>
+  if (document.documentElement.classList.contains("reveal-ready")) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -5% 0px" });
+    document.querySelectorAll("[data-reveal]").forEach((el) => observer.observe(el));
+  }
+</script>
+</body>
+</html>
